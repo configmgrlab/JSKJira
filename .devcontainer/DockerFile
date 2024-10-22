@@ -3,4 +3,7 @@ FROM mcr.microsoft.com/powershell:latest
 RUN apt-get update && apt-get -y install git 
 
 SHELL ["pwsh", "-command"]
-RUN Set-PSRepository -Name PSGallery -InstallationPolicy Trusted && Install-Module -Name Pester, PlatyPS -AllowClobber -Force
+RUN Set-PSRepository -Name PSGallery -InstallationPolicy Trusted && Install-Module -Name Pester, PlatyPS, InvokeBuild, PSScriptAnalyzer -AllowClobber -Force
+
+SHELL [ "pwsh", "-command" ]
+RUN if (Test-Path $PROFILE) {Get-Content $PROFILE} Else {New-Item -Name powershell -Path /root/.config/ -ItemType Directory; Set-Content -Path $PROFILE -Value "Set-PSReadLineKeyHandler -Chord 'Ctrl+D2' -Function MenuComplete;`nSet-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView"}
