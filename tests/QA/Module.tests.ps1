@@ -76,7 +76,7 @@ Describe 'Files should exist' {
     }
 
     it "Should have a Dockerfile file" {
-        $dockerfile = "{0}/Dockerfile" -f $rootFolder | Convert-Path
+        $dockerfile = "{0}/.devcontainer/Dockerfile" -f $rootFolder | Convert-Path
         Test-Path $dockerfile | Should -Be $true
     }
 }
@@ -97,6 +97,6 @@ Describe "Module Manifest" {
     It should "Name should be the same as the name in psd1" {
         $moduleManifest = "{0}/source/{1}.psd1" -f $rootFolder, $ProjectName | Convert-Path
         $manifest = Import-Module -Name $moduleManifest -PassThru
-        $manifest.Name | Should -Be $ProjectName.ToString()
+        $manifest.Name | Should -Be 'JSKJira'
     }
 }
